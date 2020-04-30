@@ -1,7 +1,7 @@
 import React from "react";
 import { Card, Button, Form, Row } from "react-bootstrap";
 
-function Cards({ Remove }) {
+function Cards() {
   return (
     <div>
       <Card
