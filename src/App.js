@@ -1,24 +1,43 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from "react";
+import { Button } from "react-bootstrap";
+import Cards from "./pages/Cards";
+import "./App.css";
 
 function App() {
+  const [snip, setSnip] = useState([]);
+
+  const AddSnip = () => {
+    setSnip([...snip, <Cards />]);
+  };
+
+  const remove = (i) => {
+    const newsnip = [...snip];
+    newsnip.splice(i, 1);
+    setSnip(newsnip);
+  };
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <div>
+        <Button onClick={AddSnip}>Add Snip</Button>
+      </div>
+      <div>
+        {snip.map((snip, i) => (
+          <div key={i}>
+            {snip}
+            <Button
+              style={{ position: "relative", bottom: "40vh" }}
+              variant="outline-secondary"
+              className="float-left "
+              onClick={() => {
+                remove(i);
+              }}
+            >
+              X
+            </Button>
+          </div>
+        ))}
+      </div>
     </div>
   );
 }
