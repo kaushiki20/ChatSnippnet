@@ -106,7 +106,7 @@ function App() {
   }, [snip]);
 
   return (
-    <div className="App">
+    <div className="App" style={{ display: "flex" }}>
       <div>
         <Button onClick={AddSnip}>Add Snip</Button>
       </div>
@@ -135,8 +135,8 @@ function App() {
                     <Button
                       style={{
                         position: "relative",
-                        bottom: "40vh",
-                        left: "10vh",
+                        bottom: "58vh",
+                        left: "25vh",
                       }}
                       variant="outline-secondary"
                       className="float-left "

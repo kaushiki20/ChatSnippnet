@@ -1,7 +1,8 @@
 import React from "react";
 import { Card, Button, Form, Row } from "react-bootstrap";
-
+import useRecorder from "../useRecorder";
 function Cards() {
+  let [audioURL, isRecording, startRecording, stopRecording] = useRecorder();
   return (
     <div>
       <Card
@@ -13,12 +14,21 @@ function Cards() {
           <Card.Title>Snip</Card.Title>
 
           <Card.Text>
-            <Form.Group as={Row}>
-              <Form.Label>Customer</Form.Label>
+            <Form.Group>
+              <Form.Label className="float-left">Customer</Form.Label>
               <Form.Control as="textarea" placeholder="Enter Text" />
-
-              <Form.Label>Bot</Form.Label>
+              <audio id="player" src={audioURL} controls></audio>
+              <button onClick={startRecording} disabled={isRecording}>
+                start recording
+              </button>
+              <button onClick={stopRecording} disabled={!isRecording}>
+                stop recording
+              </button>
+            </Form.Group>
+            <Form.Group>
+              <Form.Label className="float-right">Bot</Form.Label>
               <Form.Control as="textarea" placeholder="Enter Text" />
+              <audio id="player" controls></audio>
             </Form.Group>
           </Card.Text>
           <Button variant="primary">Submit</Button>
