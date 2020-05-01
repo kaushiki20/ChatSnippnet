@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Button, Row, Col } from "react-bootstrap";
+
 import Cards from "./pages/Cards";
 import "./App.css";
 
@@ -108,48 +108,43 @@ function App() {
   return (
     <div className="App" style={{ display: "flex" }}>
       <div>
-        <Button onClick={AddSnip}>Add Snip</Button>
+        <button onClick={AddSnip}>Add Snip</button>
       </div>
       <div>
         {snip.map((snip, i) => (
           <ul key={i} style={{ marginLeft: "10px" }}>
-            <Row>
-              <Col sm="3">
-                <li
-                  key={i}
-                  data-position={i}
-                  draggable
-                  onDragStart={onDragStart}
-                  onDragOver={onDragOver}
-                  onDrop={onDrop}
-                  onDragLeave={onDragLeave}
-                  className={
-                    dragAndDrop && dragAndDrop.draggedTo === Number(i)
-                      ? "dropArea"
-                      : ""
-                  }
-                >
-                  {" "}
-                  <Col sm="2">{snip}</Col>
-                  <Col sm="1">
-                    <Button
-                      style={{
-                        position: "relative",
-                        bottom: "58vh",
-                        left: "25vh",
-                      }}
-                      variant="outline-secondary"
-                      className="float-left "
-                      onClick={() => {
-                        remove(i);
-                      }}
-                    >
-                      X
-                    </Button>
-                  </Col>
-                </li>
-              </Col>
-            </Row>
+            <li
+              key={i}
+              data-position={i}
+              draggable
+              onDragStart={onDragStart}
+              onDragOver={onDragOver}
+              onDrop={onDrop}
+              onDragLeave={onDragLeave}
+              className={
+                dragAndDrop && dragAndDrop.draggedTo === Number(i)
+                  ? "dropArea"
+                  : ""
+              }
+            >
+              {" "}
+              {snip}
+              <button
+                style={{
+                  position: "relative",
+                  bottom: "50vh",
+                  marginLeft: "5px",
+                  marginTop: "5px",
+                }}
+                variant="outline-secondary"
+                className="float-left "
+                onClick={() => {
+                  remove(i);
+                }}
+              >
+                X
+              </button>
+            </li>
           </ul>
         ))}
       </div>

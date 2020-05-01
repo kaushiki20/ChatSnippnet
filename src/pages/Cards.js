@@ -1,39 +1,117 @@
 import React from "react";
-import { Card, Button, Form, Row } from "react-bootstrap";
+
 import useRecorder from "../useRecorder";
 function Cards() {
-  let [audioURL, isRecording, startRecording, stopRecording] = useRecorder();
+  let [
+    audioURL,
+    isRecording,
+    startRecording,
+    stopRecording,
+    botRecording,
+  ] = useRecorder();
+  console.log(audioURL[1].audioURL);
   return (
     <div>
-      <Card
+      <div
         style={{
-          width: "18rem",
+          width: "80vh",
+          height: "50vh",
+          border: "1px #bdc3c7 solid",
         }}
       >
-        <Card.Body>
-          <Card.Title>Snip</Card.Title>
+        <div>
+          <h4>Snip</h4>
 
-          <Card.Text>
-            <Form.Group>
-              <Form.Label className="float-left">Customer</Form.Label>
-              <Form.Control as="textarea" placeholder="Enter Text" />
-              <audio id="player" src={audioURL} controls></audio>
-              <button onClick={startRecording} disabled={isRecording}>
-                start recording
-              </button>
-              <button onClick={stopRecording} disabled={!isRecording}>
-                stop recording
-              </button>
-            </Form.Group>
-            <Form.Group>
-              <Form.Label className="float-right">Bot</Form.Label>
-              <Form.Control as="textarea" placeholder="Enter Text" />
-              <audio id="player" controls></audio>
-            </Form.Group>
-          </Card.Text>
-          <Button variant="primary">Submit</Button>
-        </Card.Body>
-      </Card>
+          <div>
+            <div style={{ marginBottom: "10px" }}>
+              <label
+                style={{ fontSize: "30px", float: "left", marginLeft: "10px" }}
+              >
+                Bot
+              </label>
+              <textarea
+                style={{ float: "left", marginLeft: "20px" }}
+                id="w3mission"
+                rows="2"
+                cols="40"
+              ></textarea>
+              <div>
+                <audio
+                  style={{ marginTop: "5px" }}
+                  id="2"
+                  src={audioURL[1].audioUrl}
+                  controls
+                ></audio>
+                <button
+                  style={{
+                    marginRight: "5px",
+                    float: "left",
+                    marginTop: "5px",
+                    marginLeft: "5px",
+                  }}
+                  id="2"
+                  onClick={(e) => startRecording(2, "bot", e)}
+                  disabled={botRecording}
+                >
+                  start recording
+                </button>
+                <button
+                  style={{
+                    float: "left",
+                    marginTop: "5px",
+                  }}
+                  onClick={(e) => stopRecording(2, "bot", e)}
+                  disabled={!botRecording}
+                >
+                  stop recording
+                </button>
+              </div>
+            </div>
+            <div style={{ marginBottom: "10px" }}>
+              <label
+                style={{
+                  fontSize: "30px",
+                  float: "right",
+                  marginRight: "10px",
+                }}
+              >
+                Customer
+              </label>
+              <textarea
+                style={{ float: "right", marginRight: "20px" }}
+                id="w3mission"
+                rows="2"
+                cols="40"
+              ></textarea>
+
+              <div>
+                <audio
+                  style={{ marginTop: "5px" }}
+                  id="1"
+                  src={audioURL[0].audioUrl}
+                  controls
+                ></audio>
+                <button
+                  style={{ marginTop: "5px" }}
+                  onClick={(e) => startRecording(1, "user", e)}
+                  disabled={isRecording}
+                >
+                  start recording
+                </button>
+                <button
+                  style={{ marginTop: "5px", marginLeft: "5px" }}
+                  onClick={(e) => stopRecording(1, "user", e)}
+                  disabled={!isRecording}
+                >
+                  stop recording
+                </button>
+              </div>
+            </div>
+          </div>
+          <button style={{ marginRight: "10px" }}>Submit</button>
+          <button>Download</button>
+        </div>
+      </div>
     </div>
   );
 }
