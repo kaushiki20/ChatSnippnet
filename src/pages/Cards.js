@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import "../App.css";
+import "./Cards.css";
 import useRecorder from "../useRecorder";
 function Cards({ chat, setChat, download }) {
   let [
@@ -21,99 +21,113 @@ function Cards({ chat, setChat, download }) {
   return (
     //please click fetch audio btn after recording to play it in player
     <div>
-      <div
-        style={{
-          width: "80vh",
-          height: "50vh",
-          border: "1px #bdc3c7 solid",
-        }}
-      >
+      <div className="card">
         <div>
           <h4 style={{ fontWeight: "700" }}>SNIP</h4>
 
           <div>
-            <div style={{ marginBottom: "10px" }}>
+            <div
+              style={{
+                marginBottom: "10px",
+                display: "flex",
+                flexDirection: "column",
+                textAlign: "left",
+              }}
+            >
               <label
                 style={{
                   fontSize: "30px",
                   float: "left",
-                  marginLeft: "10px",
+                  marginLeft: "1%",
                   fontWeight: "700",
                 }}
               >
                 Bot
               </label>
               <textarea
+                type="text"
                 value={bot.text}
                 onChange={(e) => {
                   setBot({ ...bot, text: e.target.value, audio: "" });
                 }}
-                style={{ float: "left", marginLeft: "20px" }}
+                style={{
+                  float: "left",
+                  marginLeft: "20px",
+                  marginRight: "20px",
+                }}
                 id="w3mission"
                 rows="2"
-                cols="40"
+                cols="20"
               ></textarea>
-              <div>
+              <div style={{ display: "flex", flexDirection: "column" }}>
                 <audio
+                  className="botaudio"
                   style={{ marginTop: "5px" }}
                   id="2"
                   src={bot.audio}
                   controls
                 ></audio>
-                <button
-                  style={{
-                    marginRight: "5px",
-                    fontWeight: "700",
-                    float: "left",
-                    marginTop: "5px",
-                    marginLeft: "5px",
-                    backgroundColor: "#1abc9c",
-                    border: "none",
+                <div style={{ diaplay: "flex" }}>
+                  <button
+                    className="stopbot"
+                    style={{
+                      fontWeight: "700",
 
-                    borderRadius: "2px",
-                  }}
-                  id="2"
-                  onClick={(e) => startRecording(2, "bot", e)}
-                  disabled={botRecording}
-                >
-                  start recording
-                </button>
-                <button
-                  style={{
-                    float: "left",
-                    fontWeight: "700",
-                    marginTop: "5px",
-                    backgroundColor: "#1abc9c",
-                    border: "none",
+                      backgroundColor: "#1abc9c",
+                      border: "none",
 
-                    borderRadius: "2px",
-                  }}
-                  onClick={() => {
-                    setBot({ ...bot, audio: audioURL[1].audioUrl });
-                  }}
-                >
-                  fetch audio
-                </button>
-                <button
-                  style={{
-                    float: "left",
-                    fontWeight: "700",
-                    marginLeft: "5px",
-                    position: "relative",
-                    bottom: "3vh",
-                    backgroundColor: "#1abc9c",
-                    border: "none",
+                      borderRadius: "2px",
+                    }}
+                    onClick={(e) => stopRecording(2, "bot", e)}
+                    disabled={!botRecording}
+                  >
+                    stop recording
+                  </button>
+                  <button
+                    className="startbot"
+                    style={{
+                      fontWeight: "700",
 
-                    borderRadius: "2px",
-                  }}
-                  onClick={(e) => stopRecording(2, "bot", e)}
-                  disabled={!botRecording}
-                >
-                  stop recording
-                </button>
+                      backgroundColor: "#1abc9c",
+                      border: "none",
+
+                      borderRadius: "2px",
+                    }}
+                    id="2"
+                    onClick={(e) => startRecording(2, "bot", e)}
+                    disabled={botRecording}
+                  >
+                    start recording
+                  </button>
+
+                  <button
+                    className="fetchbot"
+                    style={{
+                      fontWeight: "700",
+
+                      backgroundColor: "#1abc9c",
+                      border: "none",
+
+                      borderRadius: "2px",
+                    }}
+                    onClick={() => {
+                      setBot({ ...bot, audio: audioURL[1].audioUrl });
+                    }}
+                  >
+                    fetch audio
+                  </button>
+                </div>
               </div>
             </div>
-            <div style={{ marginBottom: "10px" }}>
+            <div
+              style={{
+                marginBottom: "10px",
+                display: "flex",
+                flexDirection: "column",
+                textAlign: "right",
+                justifyContent: "right",
+              }}
+            >
               <label
                 style={{
                   fontSize: "30px",
@@ -125,81 +139,91 @@ function Cards({ chat, setChat, download }) {
                 Customer
               </label>
               <textarea
+                type="text"
                 value={user.text}
                 onChange={(e) => {
                   setUser({ ...user, text: e.target.value, audio: "" });
                 }}
-                style={{ float: "right", marginRight: "20px" }}
+                style={{
+                  float: "right",
+                  marginRight: "20px",
+                  marginLeft: "20px",
+                }}
                 id="w3mission"
                 rows="2"
-                cols="40"
+                cols="20"
               ></textarea>
 
-              <div>
+              <div
+                style={{
+                  display: "flex",
+                  flexDirection: "column",
+                }}
+              >
                 <audio
+                  className="useraudio"
                   style={{ marginTop: "5px" }}
                   id="1"
                   src={user.audio}
                   controls
                 ></audio>
+                <div>
+                  <button
+                    className="userfetch"
+                    style={{
+                      backgroundColor: "#1abc9c",
+                      border: "none",
+                      fontWeight: "700",
+                      borderRadius: "2px",
+                    }}
+                    onClick={() => {
+                      setUser({ ...user, audio: audioURL[0].audioUrl });
+                    }}
+                  >
+                    fetch audio
+                  </button>
+                  <button
+                    className="userstop"
+                    style={{
+                      fontWeight: "700",
+                      float: "right",
 
-                <button
-                  style={{
-                    backgroundColor: "#1abc9c",
-                    border: "none",
-                    fontWeight: "700",
-                    borderRadius: "2px",
-                  }}
-                  onClick={() => {
-                    setUser({ ...user, audio: audioURL[0].audioUrl });
-                  }}
-                >
-                  fetch audio
-                </button>
-                <button
-                  style={{
-                    marginTop: "5px",
-                    marginLeft: "5px",
-                    fontWeight: "700",
-                    backgroundColor: "#1abc9c",
-                    border: "none",
+                      backgroundColor: "#1abc9c",
+                      border: "none",
 
-                    borderRadius: "2px",
-                  }}
-                  onClick={(e) => startRecording(1, "user", e)}
-                  disabled={isRecording}
-                >
-                  start recording
-                </button>
-                <button
-                  style={{
-                    marginTop: "5px",
-                    marginLeft: "5px",
-                    fontWeight: "700",
-                    float: "right",
-                    marginRight: "30px",
-                    backgroundColor: "#1abc9c",
-                    border: "none",
+                      borderRadius: "2px",
+                    }}
+                    onClick={(e) => stopRecording(1, "user", e)}
+                    disabled={!isRecording}
+                  >
+                    stop recording
+                  </button>
+                  <button
+                    className="userstart"
+                    style={{
+                      fontWeight: "700",
+                      backgroundColor: "#1abc9c",
+                      border: "none",
 
-                    borderRadius: "2px",
-                  }}
-                  onClick={(e) => stopRecording(1, "user", e)}
-                  disabled={!isRecording}
-                >
-                  stop recording
-                </button>
+                      borderRadius: "2px",
+                    }}
+                    onClick={(e) => startRecording(1, "user", e)}
+                    disabled={isRecording}
+                  >
+                    start recording
+                  </button>
+                </div>
               </div>
             </div>
           </div>
           <button
             onClick={handleSubmit}
             style={{
-              marginRight: "10px",
-              marginTop: "25px",
               backgroundColor: "#1abc9c",
               border: "none",
               fontWeight: "700",
-              width: "10vh",
+              marginTop: "3%",
+              marginBottom: "2%",
               borderRadius: "2px",
             }}
           >

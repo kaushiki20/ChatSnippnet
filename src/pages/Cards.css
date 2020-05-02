@@ -1,0 +1,59 @@
+.card {
+  width: 80%;
+
+  border: 1px solid #bdc3c7;
+}
+.botaudio {
+  margin-left: 1%;
+}
+.useraudio {
+  margin-left: 64%;
+}
+@media only screen and (max-width: 1100px) {
+  .botaudio {
+    width: 50%;
+    margin-left: 5%;
+  }
+  .card {
+    width: "100%";
+  }
+  .useraudio {
+    width: 50%;
+    margin-left: 45%;
+  }
+}
+
+.startbot {
+  width: 20%;
+  margin-left: 1%;
+  margin-top: 1%;
+}
+
+.stopbot {
+  width: 20%;
+  margin-left: 1%;
+  margin-top: 1%;
+}
+.fetchbot {
+  width: 20%;
+  margin-left: 1%;
+  margin-top: 1%;
+}
+
+.userfetch {
+  width: 20%;
+  margin-left: 1%;
+  margin-top: 1%;
+}
+.userstart {
+  width: 20%;
+  margin-left: 1%;
+  margin-top: 1%;
+}
+
+.userstop {
+  width: 20%;
+  margin-left: 1%;
+  margin-right: 1%;
+  margin-top: 1%;
+}

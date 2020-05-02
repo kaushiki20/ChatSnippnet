@@ -1,4 +1,12 @@
 .App {
   text-align: center;
+  justify-content: center;
   font-family: "Inconsolata";
+}
+
+.close {
+  position: relative;
+  float: left;
+  bottom: 69vh;
+  margin-left: 75%;
 }

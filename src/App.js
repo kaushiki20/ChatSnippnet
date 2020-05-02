@@ -213,18 +213,13 @@ function App() {
               {" "}
               {snip}
               <button
+                className="close"
                 style={{
-                  position: "relative",
-                  bottom: "50vh",
-                  marginLeft: "5px",
-                  marginTop: "5px",
                   border: "none",
                   borderRadius: "2px",
                   backgroundColor: "#607D8B",
                   fontWeight: "700",
                 }}
-                variant="outline-secondary"
-                className="float-left "
                 onClick={() => {
                   remove(i);
                 }}
