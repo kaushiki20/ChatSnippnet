@@ -14,23 +14,17 @@ function Cards({ chat, setChat, download }) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    debugger;
     setChat([...chat, { id: "", user: user, bot: bot }]);
   };
 
+  const handleDownload = () => {
+    console.log(chat);
+    debugger;
+    download();
+  };
+
   console.log(user.audio);
-  useEffect(() => {
-    if (audioURL) {
-      const newChat = chat.map((c, i) => {
-        if (c.user === audioURL[i].type) {
-          console.log(audioURL[i].audioUrl);
-          return audioURL.audioUrl;
-        } else {
-          return c;
-        }
-      });
-      setChat(newChat);
-    }
-  }, [audioURL]);
 
   return (
     <div>
@@ -54,7 +48,7 @@ function Cards({ chat, setChat, download }) {
               <textarea
                 value={bot.text}
                 onChange={(e) => {
-                  setBot({ text: e.target.value });
+                  setBot({ ...bot, text: e.target.value });
                 }}
                 style={{ float: "left", marginLeft: "20px" }}
                 id="w3mission"
@@ -84,7 +78,7 @@ function Cards({ chat, setChat, download }) {
                 <button
                   style={{ float: "left", marginTop: "5px" }}
                   onClick={() => {
-                    setBot({ audio: audioURL[1].audioUrl });
+                    setBot({ ...bot, audio: audioURL[1].audioUrl });
                   }}
                 >
                   fetch audio
@@ -116,7 +110,7 @@ function Cards({ chat, setChat, download }) {
               <textarea
                 value={user.text}
                 onChange={(e) => {
-                  setUser({ text: e.target.value });
+                  setUser({ ...user, text: e.target.value });
                 }}
                 style={{ float: "right", marginRight: "20px" }}
                 id="w3mission"
@@ -134,7 +128,7 @@ function Cards({ chat, setChat, download }) {
 
                 <button
                   onClick={() => {
-                    setUser({ audio: audioURL[0].audioUrl });
+                    setUser({ ...user, audio: audioURL[0].audioUrl });
                   }}
                 >
                   fetch audio
@@ -164,7 +158,6 @@ function Cards({ chat, setChat, download }) {
           <button onClick={handleSubmit} style={{ marginRight: "10px" }}>
             Submit
           </button>
-          <button onClick={download}>Download</button>
         </div>
       </div>
     </div>

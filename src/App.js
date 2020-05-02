@@ -14,7 +14,23 @@ const initialDnDState = {
 function App() {
   const [snip, setSnip] = useState([]);
   const [dragAndDrop, setDragAndDrop] = React.useState(initialDnDState);
-  const [chat, setChat] = useState([{}]);
+  const [chat, setChat] = useState([]);
+
+  const handleDownload = () => {
+    const fileName = "file";
+    const json = JSON.stringify(chat);
+    debugger;
+    const blob = new Blob([json], { type: "application/json" });
+
+    const href = URL.createObjectURL(blob);
+    const link = document.createElement("a");
+    link.href = href;
+    link.download = fileName + ".json";
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  };
+
   const AddSnip = () => {
     setSnip([
       ...snip,
@@ -26,19 +42,6 @@ function App() {
     const newsnip = [...snip];
     newsnip.splice(i, 1);
     setSnip(newsnip);
-  };
-
-  const handleDownload = () => {
-    const fileName = "file";
-    const json = JSON.stringify(chat);
-    const blob = new Blob([json], { type: "application/json" });
-    const href = URL.createObjectURL(blob);
-    const link = document.createElement("a");
-    link.href = href;
-    link.download = fileName + ".json";
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
   };
 
   const onDragStart = (event) => {
@@ -164,6 +167,7 @@ function App() {
             </li>
           </ul>
         ))}
+        <button onClick={handleDownload}>Download</button>
       </div>
     </div>
   );
