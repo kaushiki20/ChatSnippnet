@@ -114,7 +114,6 @@ function App() {
       draggedTo: null,
     });
   };
- =
 
   React.useEffect(() => {
     console.log("Dragged From: ", dragAndDrop && dragAndDrop.draggedFrom);
@@ -135,12 +134,11 @@ function App() {
       audios.push(c.user.audio);
       audios.push(c.bot.audio);
     });
-    
+
     audio.src = audios.length ? audios[0] : "";
 
     audio.load();
     audio.addEventListener("ended", () => {
-      
       if (index.current > audios.length) {
         return;
       }

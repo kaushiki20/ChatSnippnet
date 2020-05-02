@@ -14,7 +14,6 @@ const useRecorder = () => {
     },
   ]);
 
-  // const [currentId, setCurrentId] = useState(null);
   const [isRecording, setIsRecording] = useState(false);
   const [botRecording, setBotRecording] = useState(false);
   const recorder = useRef({});
@@ -27,7 +26,6 @@ const useRecorder = () => {
         audio: true,
       })
       .then(function (stream) {
-        console.log("ready to record!");
         recorder.current = new MediaRecorder(stream);
 
         // listen to dataavailable, which gets triggered whenever we have
@@ -43,7 +41,6 @@ const useRecorder = () => {
 
       currentId.current = { id, type };
 
-      console.log("working");
       if (id === 1) {
         setIsRecording(true);
       } else {
@@ -61,13 +58,11 @@ const useRecorder = () => {
       } else {
         setBotRecording(false);
       }
-      console.log("stopped");
     },
     [recorder]
   );
 
   const onRecordingReady = (e) => {
-    console.log(currentId.current.id, currentId.current.type);
     let newAudio = audioURL.map((a, i) => {
       if (a.id === currentId.current.id && a.type === currentId.current.type) {
         return { ...a, audioUrl: URL.createObjectURL(e.data) };

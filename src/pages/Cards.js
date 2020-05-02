@@ -19,6 +19,7 @@ function Cards({ chat, setChat, download }) {
   };
 
   return (
+    //please click fetch audio btn after recording to play it in player
     <div>
       <div
         style={{
