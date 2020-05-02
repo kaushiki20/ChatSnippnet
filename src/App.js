@@ -30,14 +30,14 @@ function App() {
     link.click();
     document.body.removeChild(link);
   };
-
+  //add snips
   const AddSnip = () => {
     setSnip([
       ...snip,
       <Cards chat={chat} setChat={setChat} download={handleDownload} />,
     ]);
   };
-
+  //remove snip
   const remove = (i) => {
     const newsnip = [...snip];
     newsnip.splice(i, 1);
@@ -114,7 +114,7 @@ function App() {
       draggedTo: null,
     });
   };
-  console.log(chat);
+ =
 
   React.useEffect(() => {
     console.log("Dragged From: ", dragAndDrop && dragAndDrop.draggedFrom);
@@ -124,7 +124,7 @@ function App() {
   React.useEffect(() => {
     console.log("List updated!");
   }, [snip]);
-
+  //audio stich
   const innerRef = useRef(null);
   const index = useRef(1);
   useEffect(() => {
@@ -132,16 +132,15 @@ function App() {
 
     const audios = [];
     chat.forEach(function (c) {
-      // eslint-disable-next-line
       audios.push(c.user.audio);
       audios.push(c.bot.audio);
     });
-    console.log(audios);
+    
     audio.src = audios.length ? audios[0] : "";
 
     audio.load();
     audio.addEventListener("ended", () => {
-      console.log(index.current, audios);
+      
       if (index.current > audios.length) {
         return;
       }
