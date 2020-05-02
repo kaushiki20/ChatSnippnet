@@ -13,6 +13,7 @@ const useRecorder = () => {
       audioUrl: "",
     },
   ]);
+
   // const [currentId, setCurrentId] = useState(null);
   const [isRecording, setIsRecording] = useState(false);
   const [botRecording, setBotRecording] = useState(false);
@@ -73,7 +74,7 @@ const useRecorder = () => {
       }
       return a;
     });
-    console.log(newAudio);
+
     setAudioURL(newAudio);
   };
 

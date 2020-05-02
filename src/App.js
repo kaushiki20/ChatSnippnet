@@ -14,14 +14,31 @@ const initialDnDState = {
 function App() {
   const [snip, setSnip] = useState([]);
   const [dragAndDrop, setDragAndDrop] = React.useState(initialDnDState);
+  const [chat, setChat] = useState([{}]);
   const AddSnip = () => {
-    setSnip([...snip, <Cards />]);
+    setSnip([
+      ...snip,
+      <Cards chat={chat} setChat={setChat} download={handleDownload} />,
+    ]);
   };
 
   const remove = (i) => {
     const newsnip = [...snip];
     newsnip.splice(i, 1);
     setSnip(newsnip);
+  };
+
+  const handleDownload = () => {
+    const fileName = "file";
+    const json = JSON.stringify(chat);
+    const blob = new Blob([json], { type: "application/json" });
+    const href = URL.createObjectURL(blob);
+    const link = document.createElement("a");
+    link.href = href;
+    link.download = fileName + ".json";
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
   };
 
   const onDragStart = (event) => {
@@ -94,7 +111,7 @@ function App() {
       draggedTo: null,
     });
   };
-
+  console.log(chat);
   // Not needed, just for logging purposes:
   React.useEffect(() => {
     console.log("Dragged From: ", dragAndDrop && dragAndDrop.draggedFrom);

@@ -1,7 +1,7 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 
 import useRecorder from "../useRecorder";
-function Cards() {
+function Cards({ chat, setChat, download }) {
   let [
     audioURL,
     isRecording,
@@ -9,7 +9,29 @@ function Cards() {
     stopRecording,
     botRecording,
   ] = useRecorder();
-  console.log(audioURL[1].audioURL);
+  const [user, setUser] = useState({ text: "", audio: "" });
+  const [bot, setBot] = useState({ text: "", audio: "" });
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    setChat([...chat, { id: "", user: user, bot: bot }]);
+  };
+
+  console.log(user.audio);
+  useEffect(() => {
+    if (audioURL) {
+      const newChat = chat.map((c, i) => {
+        if (c.user === audioURL[i].type) {
+          console.log(audioURL[i].audioUrl);
+          return audioURL.audioUrl;
+        } else {
+          return c;
+        }
+      });
+      setChat(newChat);
+    }
+  }, [audioURL]);
+
   return (
     <div>
       <div
@@ -30,6 +52,10 @@ function Cards() {
                 Bot
               </label>
               <textarea
+                value={bot.text}
+                onChange={(e) => {
+                  setBot({ text: e.target.value });
+                }}
                 style={{ float: "left", marginLeft: "20px" }}
                 id="w3mission"
                 rows="2"
@@ -39,7 +65,7 @@ function Cards() {
                 <audio
                   style={{ marginTop: "5px" }}
                   id="2"
-                  src={audioURL[1].audioUrl}
+                  src={bot.audio}
                   controls
                 ></audio>
                 <button
@@ -56,9 +82,19 @@ function Cards() {
                   start recording
                 </button>
                 <button
+                  style={{ float: "left", marginTop: "5px" }}
+                  onClick={() => {
+                    setBot({ audio: audioURL[1].audioUrl });
+                  }}
+                >
+                  fetch audio
+                </button>
+                <button
                   style={{
                     float: "left",
-                    marginTop: "5px",
+                    marginLeft: "5px",
+                    position: "relative",
+                    bottom: "3vh",
                   }}
                   onClick={(e) => stopRecording(2, "bot", e)}
                   disabled={!botRecording}
@@ -78,6 +114,10 @@ function Cards() {
                 Customer
               </label>
               <textarea
+                value={user.text}
+                onChange={(e) => {
+                  setUser({ text: e.target.value });
+                }}
                 style={{ float: "right", marginRight: "20px" }}
                 id="w3mission"
                 rows="2"
@@ -88,18 +128,31 @@ function Cards() {
                 <audio
                   style={{ marginTop: "5px" }}
                   id="1"
-                  src={audioURL[0].audioUrl}
+                  src={user.audio}
                   controls
                 ></audio>
+
                 <button
-                  style={{ marginTop: "5px" }}
+                  onClick={() => {
+                    setUser({ audio: audioURL[0].audioUrl });
+                  }}
+                >
+                  fetch audio
+                </button>
+                <button
+                  style={{ marginTop: "5px", marginLeft: "5px" }}
                   onClick={(e) => startRecording(1, "user", e)}
                   disabled={isRecording}
                 >
                   start recording
                 </button>
                 <button
-                  style={{ marginTop: "5px", marginLeft: "5px" }}
+                  style={{
+                    marginTop: "5px",
+                    marginLeft: "5px",
+                    float: "right",
+                    marginRight: "30px",
+                  }}
                   onClick={(e) => stopRecording(1, "user", e)}
                   disabled={!isRecording}
                 >
@@ -108,8 +161,10 @@ function Cards() {
               </div>
             </div>
           </div>
-          <button style={{ marginRight: "10px" }}>Submit</button>
-          <button>Download</button>
+          <button onClick={handleSubmit} style={{ marginRight: "10px" }}>
+            Submit
+          </button>
+          <button onClick={download}>Download</button>
         </div>
       </div>
     </div>
