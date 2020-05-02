@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-
+import "../App.css";
 import useRecorder from "../useRecorder";
 function Cards({ chat, setChat, download }) {
   let [
@@ -14,17 +14,9 @@ function Cards({ chat, setChat, download }) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    debugger;
+
     setChat([...chat, { id: "", user: user, bot: bot }]);
   };
-
-  const handleDownload = () => {
-    console.log(chat);
-    debugger;
-    download();
-  };
-
-  console.log(user.audio);
 
   return (
     <div>
@@ -36,19 +28,24 @@ function Cards({ chat, setChat, download }) {
         }}
       >
         <div>
-          <h4>Snip</h4>
+          <h4 style={{ fontWeight: "700" }}>SNIP</h4>
 
           <div>
             <div style={{ marginBottom: "10px" }}>
               <label
-                style={{ fontSize: "30px", float: "left", marginLeft: "10px" }}
+                style={{
+                  fontSize: "30px",
+                  float: "left",
+                  marginLeft: "10px",
+                  fontWeight: "700",
+                }}
               >
                 Bot
               </label>
               <textarea
                 value={bot.text}
                 onChange={(e) => {
-                  setBot({ ...bot, text: e.target.value });
+                  setBot({ ...bot, text: e.target.value, audio: "" });
                 }}
                 style={{ float: "left", marginLeft: "20px" }}
                 id="w3mission"
@@ -65,9 +62,14 @@ function Cards({ chat, setChat, download }) {
                 <button
                   style={{
                     marginRight: "5px",
+                    fontWeight: "700",
                     float: "left",
                     marginTop: "5px",
                     marginLeft: "5px",
+                    backgroundColor: "#1abc9c",
+                    border: "none",
+
+                    borderRadius: "2px",
                   }}
                   id="2"
                   onClick={(e) => startRecording(2, "bot", e)}
@@ -76,7 +78,15 @@ function Cards({ chat, setChat, download }) {
                   start recording
                 </button>
                 <button
-                  style={{ float: "left", marginTop: "5px" }}
+                  style={{
+                    float: "left",
+                    fontWeight: "700",
+                    marginTop: "5px",
+                    backgroundColor: "#1abc9c",
+                    border: "none",
+
+                    borderRadius: "2px",
+                  }}
                   onClick={() => {
                     setBot({ ...bot, audio: audioURL[1].audioUrl });
                   }}
@@ -86,9 +96,14 @@ function Cards({ chat, setChat, download }) {
                 <button
                   style={{
                     float: "left",
+                    fontWeight: "700",
                     marginLeft: "5px",
                     position: "relative",
                     bottom: "3vh",
+                    backgroundColor: "#1abc9c",
+                    border: "none",
+
+                    borderRadius: "2px",
                   }}
                   onClick={(e) => stopRecording(2, "bot", e)}
                   disabled={!botRecording}
@@ -101,6 +116,7 @@ function Cards({ chat, setChat, download }) {
               <label
                 style={{
                   fontSize: "30px",
+                  fontWeight: "700",
                   float: "right",
                   marginRight: "10px",
                 }}
@@ -110,7 +126,7 @@ function Cards({ chat, setChat, download }) {
               <textarea
                 value={user.text}
                 onChange={(e) => {
-                  setUser({ ...user, text: e.target.value });
+                  setUser({ ...user, text: e.target.value, audio: "" });
                 }}
                 style={{ float: "right", marginRight: "20px" }}
                 id="w3mission"
@@ -127,6 +143,12 @@ function Cards({ chat, setChat, download }) {
                 ></audio>
 
                 <button
+                  style={{
+                    backgroundColor: "#1abc9c",
+                    border: "none",
+                    fontWeight: "700",
+                    borderRadius: "2px",
+                  }}
                   onClick={() => {
                     setUser({ ...user, audio: audioURL[0].audioUrl });
                   }}
@@ -134,7 +156,15 @@ function Cards({ chat, setChat, download }) {
                   fetch audio
                 </button>
                 <button
-                  style={{ marginTop: "5px", marginLeft: "5px" }}
+                  style={{
+                    marginTop: "5px",
+                    marginLeft: "5px",
+                    fontWeight: "700",
+                    backgroundColor: "#1abc9c",
+                    border: "none",
+
+                    borderRadius: "2px",
+                  }}
                   onClick={(e) => startRecording(1, "user", e)}
                   disabled={isRecording}
                 >
@@ -144,8 +174,13 @@ function Cards({ chat, setChat, download }) {
                   style={{
                     marginTop: "5px",
                     marginLeft: "5px",
+                    fontWeight: "700",
                     float: "right",
                     marginRight: "30px",
+                    backgroundColor: "#1abc9c",
+                    border: "none",
+
+                    borderRadius: "2px",
                   }}
                   onClick={(e) => stopRecording(1, "user", e)}
                   disabled={!isRecording}
@@ -155,7 +190,18 @@ function Cards({ chat, setChat, download }) {
               </div>
             </div>
           </div>
-          <button onClick={handleSubmit} style={{ marginRight: "10px" }}>
+          <button
+            onClick={handleSubmit}
+            style={{
+              marginRight: "10px",
+              marginTop: "25px",
+              backgroundColor: "#1abc9c",
+              border: "none",
+              fontWeight: "700",
+              width: "10vh",
+              borderRadius: "2px",
+            }}
+          >
             Submit
           </button>
         </div>

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useRef } from "react";
 
 import Cards from "./pages/Cards";
 import "./App.css";
@@ -115,7 +115,7 @@ function App() {
     });
   };
   console.log(chat);
-  // Not needed, just for logging purposes:
+
   React.useEffect(() => {
     console.log("Dragged From: ", dragAndDrop && dragAndDrop.draggedFrom);
     console.log("Dropping Into: ", dragAndDrop && dragAndDrop.draggedTo);
@@ -125,14 +125,80 @@ function App() {
     console.log("List updated!");
   }, [snip]);
 
+  const innerRef = useRef(null);
+  const index = useRef(1);
+  useEffect(() => {
+    const audio = innerRef.current;
+
+    const audios = [];
+    chat.forEach(function (c) {
+      // eslint-disable-next-line
+      audios.push(c.user.audio);
+      audios.push(c.bot.audio);
+    });
+    console.log(audios);
+    audio.src = audios.length ? audios[0] : "";
+
+    audio.load();
+    audio.addEventListener("ended", () => {
+      console.log(index.current, audios);
+      if (index.current > audios.length) {
+        return;
+      }
+      audio.src = audios[index.current] || "";
+      index.current = index.current + 1;
+      audio.load();
+      var isPlaying =
+        audio.currentTime > 0 &&
+        !audio.paused &&
+        !audio.ended &&
+        audio.readyState > 2;
+
+      if (!isPlaying) {
+        audio.play();
+      }
+    });
+  }, [chat]);
+
   return (
-    <div className="App" style={{ display: "flex" }}>
-      <div>
-        <button onClick={AddSnip}>Add Snip</button>
+    <div className="App">
+      <div style={{ justifyContent: "center" }}>
+        <h1 style={{ fontWeight: "700" }}>AI Automation Tool</h1>
+
+        <button
+          style={{
+            marginLeft: "10px",
+            marginTop: "10px",
+            backgroundColor: "#16a085",
+            border: "none",
+            borderRadius: "2px",
+            fontWeight: "700",
+          }}
+          onClick={AddSnip}
+        >
+          Add Snip
+        </button>
+        <button
+          style={{
+            marginLeft: "10px",
+            marginTop: "10px",
+            backgroundColor: "#16a085",
+            border: "none",
+            borderRadius: "2px",
+            fontWeight: "700",
+          }}
+          onClick={handleDownload}
+        >
+          Download
+        </button>
       </div>
-      <div>
+      <audio style={{ marginTop: "10px" }} controls ref={innerRef} />
+      <div display={{ display: "flex", flexWrap: "wrap" }}>
         {snip.map((snip, i) => (
-          <ul key={i} style={{ marginLeft: "10px" }}>
+          <ul
+            key={i}
+            style={{ marginLeft: "10px", listStyle: "none", marginTop: "20px" }}
+          >
             <li
               key={i}
               data-position={i}
@@ -155,6 +221,10 @@ function App() {
                   bottom: "50vh",
                   marginLeft: "5px",
                   marginTop: "5px",
+                  border: "none",
+                  borderRadius: "2px",
+                  backgroundColor: "#607D8B",
+                  fontWeight: "700",
                 }}
                 variant="outline-secondary"
                 className="float-left "
@@ -167,7 +237,6 @@ function App() {
             </li>
           </ul>
         ))}
-        <button onClick={handleDownload}>Download</button>
       </div>
     </div>
   );
