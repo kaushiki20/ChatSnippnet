@@ -46,10 +46,21 @@ function App() {
 
   const innerRef = useRef(null);
   const ind = useRef(0);
-
+  //stiching of audios && adding buffer
   useEffect(() => {
     const audio = innerRef.current;
+    let audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+    let audiobot = new (window.AudioContext || window.webkitAudioContext)();
+    //customer buffer
+    let myArrayBuffer = audioCtx.createBuffer(1, 1500, 48000);
+    console.log(myArrayBuffer);
 
+    //bot buffer
+    let myBotBuffer = audiobot.createBuffer(1, 750, 48000);
+    console.log(myBotBuffer);
+
+    var source = audioCtx.createBufferSource();
+    source.buffer = myArrayBuffer;
     const audios = [];
     chat.forEach(function (c) {
       audios.push(c.user.audio);
@@ -60,7 +71,24 @@ function App() {
     if (audios.length) {
       combinedAudios
         .fetchAudio(...audios)
-        .then((buffers) => combinedAudios.mergeAudio(buffers))
+
+        .then((buffers) => {
+          const newBuffers = [];
+          return (
+            buffers.forEach((buffer, index) => {
+              newBuffers.push(buffer);
+              if (index % 2 === 0) {
+                // newBuffers.push(myArrayBuffer) jonsa bhi ho 1500ms vala ya fir 750ms vala
+                newBuffers.push(myArrayBuffer);
+              } else {
+                // dusra vala push kar de
+                newBuffers.push(myBotBuffer);
+              }
+            }),
+            combinedAudios.mergeAudio(newBuffers)
+          );
+          // combinedAudios.mergeAudio(buffers)
+        })
         .then((merged) => combinedAudios.export(merged, "audio/mp3"))
         .then((output) => {
           console.log(output);
