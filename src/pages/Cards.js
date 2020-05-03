@@ -19,7 +19,7 @@ function Cards({ chat, setChat, download }) {
   };
 
   return (
-    //please click fetch audio btn after recording to play it in player
+    //please click Get audio btn after stop recording to play audio  in player
     <div>
       <div className="card">
         <div>
@@ -78,7 +78,9 @@ function Cards({ chat, setChat, download }) {
 
                       borderRadius: "2px",
                     }}
-                    onClick={(e) => stopRecording(2, "bot", e)}
+                    onClick={(e) => {
+                      stopRecording(2, "bot", e);
+                    }}
                     disabled={!botRecording}
                   >
                     stop recording
@@ -114,7 +116,7 @@ function Cards({ chat, setChat, download }) {
                       setBot({ ...bot, audio: audioURL[1].audioUrl });
                     }}
                   >
-                    fetch audio
+                    Get Audio
                   </button>
                 </div>
               </div>
@@ -180,7 +182,7 @@ function Cards({ chat, setChat, download }) {
                       setUser({ ...user, audio: audioURL[0].audioUrl });
                     }}
                   >
-                    fetch audio
+                    Get Audio
                   </button>
                   <button
                     className="userstop"
@@ -193,7 +195,9 @@ function Cards({ chat, setChat, download }) {
 
                       borderRadius: "2px",
                     }}
-                    onClick={(e) => stopRecording(1, "user", e)}
+                    onClick={(e) => {
+                      stopRecording(1, "user", e);
+                    }}
                     disabled={!isRecording}
                   >
                     stop recording
