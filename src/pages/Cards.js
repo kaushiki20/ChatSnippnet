@@ -15,15 +15,7 @@ function Cards({ chat, setChat, download }) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (
-      chat.find(
-        (c) =>
-          c.user.text.toLowerCase() === user.text.toLowerCase() &&
-          c.bot.text.toLowerCase() === bot.text.toLocaleLowerCase()
-      )
-    ) {
-      return;
-    }
+
     setChat([...chat, { id: generate(), user: user, bot: bot }]);
   };
 

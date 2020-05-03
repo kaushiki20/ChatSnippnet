@@ -52,11 +52,11 @@ function App() {
     let audioCtx = new (window.AudioContext || window.webkitAudioContext)();
     let audiobot = new (window.AudioContext || window.webkitAudioContext)();
     //customer buffer
-    let myArrayBuffer = audioCtx.createBuffer(1, 1500, 48000);
+    let myArrayBuffer = audioCtx.createBuffer(1, 1500, 44100);
     console.log(myArrayBuffer);
 
     //bot buffer
-    let myBotBuffer = audiobot.createBuffer(1, 750, 48000);
+    let myBotBuffer = audiobot.createBuffer(1, 750, 44100);
     console.log(myBotBuffer);
 
     var source = audioCtx.createBufferSource();
@@ -66,32 +66,27 @@ function App() {
       audios.push(c.user.audio);
       audios.push(c.bot.audio);
     });
-
+    console.log(audios);
     let combinedAudios = new Crunker();
     if (audios.length) {
       combinedAudios
         .fetchAudio(...audios)
-
         .then((buffers) => {
           const newBuffers = [];
-          return (
-            buffers.forEach((buffer, index) => {
-              newBuffers.push(buffer);
-              if (index % 2 === 0) {
-                // newBuffers.push(myArrayBuffer) jonsa bhi ho 1500ms vala ya fir 750ms vala
-                newBuffers.push(myArrayBuffer);
-              } else {
-                // dusra vala push kar de
-                newBuffers.push(myBotBuffer);
-              }
-            }),
-            combinedAudios.mergeAudio(newBuffers)
-          );
-          // combinedAudios.mergeAudio(buffers)
+          buffers.forEach((buffer, index) => {
+            newBuffers.push(buffer);
+            if (index % 2 === 0) {
+              // newBuffers.push(myArrayBuffer) jonsa bhi ho 1500ms vala ya fir 750ms vala
+              newBuffers.push(myArrayBuffer);
+            } else {
+              // dusra vala push kar de
+              newBuffers.push(myBotBuffer);
+            }
+          });
+          return combinedAudios.mergeAudio(newBuffers);
         })
         .then((merged) => combinedAudios.export(merged, "audio/mp3"))
         .then((output) => {
-          console.log(output);
           audio.src = output.url;
           audio.load();
         });
