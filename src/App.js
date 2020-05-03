@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
-
+import Crunker from "crunker";
 import Cards from "./pages/Cards";
 import "./App.css";
 
@@ -56,30 +56,18 @@ function App() {
       audios.push(c.bot.audio);
     });
 
-    audio.src = audios.length ? audios[0] : "";
-
-    audio.load();
-    audio.addEventListener("ended", () => {
-      if (ind.current > audios.length) {
-        return;
-      }
-
-      audio.src = audios[ind.current];
-      ind.current++;
-      console.log(ind, audios.length);
-
-      audio.load();
-
-      var isPlaying =
-        audio.currentTime > 0 &&
-        !audio.paused &&
-        !audio.ended &&
-        audio.readyState > 2;
-
-      if (!isPlaying) {
-        audio.play();
-      }
-    });
+    let combinedAudios = new Crunker();
+    if (audios.length) {
+      combinedAudios
+        .fetchAudio(...audios)
+        .then((buffers) => combinedAudios.mergeAudio(buffers))
+        .then((merged) => combinedAudios.export(merged, "audio/mp3"))
+        .then((output) => {
+          console.log(output);
+          audio.src = output.url;
+          audio.load();
+        });
+    }
   }, [chat]);
 
   return (

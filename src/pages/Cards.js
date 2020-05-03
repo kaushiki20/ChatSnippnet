@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import "./Cards.css";
 import useRecorder from "../useRecorder";
+import generate from "shortid";
 function Cards({ chat, setChat, download }) {
   let [
     audioURL,
@@ -14,8 +15,16 @@ function Cards({ chat, setChat, download }) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-
-    setChat([...chat, { id: "", user: user, bot: bot }]);
+    if (
+      chat.find(
+        (c) =>
+          c.user.text.toLowerCase() === user.text.toLowerCase() &&
+          c.bot.text.toLowerCase() === bot.text.toLocaleLowerCase()
+      )
+    ) {
+      return;
+    }
+    setChat([...chat, { id: generate(), user: user, bot: bot }]);
   };
 
   return (
